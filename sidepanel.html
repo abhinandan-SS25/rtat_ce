@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Transcription</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Audio Transcription</h1>
+            <div class="status-indicators">
+                <div id="connectionStatus" class="status offline">
+                    <span class="dot"></span>
+                    <span class="text">Offline</span>
+                </div>
+                <div id="recordingStatus" class="status inactive">
+                    <span class="dot"></span>
+                    <span class="text">Inactive</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls-section">
+            <div class="main-controls">
+                <button id="startRecording" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v6m0 10v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M1 12h6m10 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/>
+                    </svg>
+                    Start Recording
+                </button>
+                <button id="stopRecording" class="btn btn-secondary" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="6" width="12" height="12"/>
+                    </svg>
+                    Stop Recording
+                </button>
+                <button id="pauseRecording" class="btn btn-secondary" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                    Pause
+                </button>
+            </div>
+
+            <div class="timer-section">
+                <div id="sessionTimer" class="timer">00:00:00</div>
+            </div>
+
+            <div class="tab-selection">
+                <label for="sourceSelect">Audio Source:</label>
+                <select id="sourceSelect" class="source-select">
+                    <option value="current">Current Tab</option>
+                    <option value="microphone">Microphone</option>
+                    <option value="both">Both</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="transcription-section">
+            <div class="section-header">
+                <h3>Live Transcription</h3>
+                <div class="export-controls">
+                    <button id="copyTranscript" class="btn btn-small">Copy</button>
+                    <button id="downloadTxt" class="btn btn-small">Download TXT</button>
+                    <button id="downloadJson" class="btn btn-small">Download JSON</button>
+                </div>
+            </div>
+
+            <div id="transcriptionDisplay" class="transcription-display">
+                <div class="placeholder">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" opacity="0.3">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                    <p>Start recording to see transcription...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <details>
+                <summary>Settings & Configuration</summary>
+                <div class="settings-content">
+                    <div class="setting-group">
+                        <label for="apiSelect">Transcription API:</label>
+                        <select id="apiSelect" class="setting-select">
+                            <option value="gemini">Google Gemini 2.5 Flash</option>
+                            <option value="whisper">OpenAI Whisper</option>
+                            <option value="deepgram">Deepgram</option>
+                            <option value="fireworks">Fireworks</option>
+                        </select>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label for="apiKey">API Key:</label>
+                        <input type="password" id="apiKey" class="setting-input" placeholder="Enter your API key">
+                        <button id="saveApiKey" class="btn btn-small">Save</button>
+                    </div>
+
+                    <div class="setting-group">
+                        <label for="chunkSize">Chunk Size (seconds):</label>
+                        <input type="number" id="chunkSize" class="setting-input" value="30" min="10" max="60">
+                    </div>
+
+                    <div class="setting-group">
+                        <label for="overlapSize">Overlap Size (seconds):</label>
+                        <input type="number" id="overlapSize" class="setting-input" value="3" min="0" max="10">
+                    </div>
+
+                    <div class="setting-group">
+                        <label>
+                            <input type="checkbox" id="showTimestamps"> Show Timestamps
+                        </label>
+                    </div>
+
+                    <div class="setting-group">
+                        <label>
+                            <input type="checkbox" id="autoScroll" checked> Auto Scroll
+                        </label>
+                    </div>
+                </div>
+            </details>
+        </div>
+
+        <div id="errorNotification" class="error-notification hidden">
+            <div class="error-content">
+                <span class="error-message"></span>
+                <button class="error-close">&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+</body>
+</html>
