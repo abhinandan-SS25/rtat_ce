@@ -3,14 +3,25 @@ A Chrome extension that captures audio from browser tabs and provides real-time 
 
 ## Features
 **Captures audio from active browser tab**
+
 **Live Transcription**
+
 **Update transcript every 30 seconds and display in sidepanel**
+
 **COmprehensive error handling and user feedback**
+
 **Export/Copy transcript functionality**
+
 **Channel labeling (tab vs microphone)**
+
 **Offline buffering capability**
+
 **Use overlap of 3 seconds of audio between consecutive 30 second chunks to make sure that no words are lost between chunks**
+
 **Configurable Chunk Sizes**
+
+## Architecture
+![alt text](./architecture_diagram.png)
 
 ## Installation
 ### Prerequisites
